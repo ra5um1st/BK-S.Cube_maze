@@ -1,3 +1,4 @@
+using Assets.Scripts.Items;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,14 @@ public class MenuPresenter : MonoBehaviour
     [SerializeField] private Button _removeButton;
     [SerializeField] private Transform _content;
     [SerializeField] private Transform _item;
+    [SerializeField] private int _typesCount;
 
     private List<ItemModel> _itemsList;
+    public List<ItemModel> ItemsList => _itemsList;
+
     private List<ItemView> _itemViewsList;
+    public List<ItemView> ItemViewsList => _itemViewsList;
+
     private static int _totalItemsCount;
 
     void Start()
@@ -27,13 +33,14 @@ public class MenuPresenter : MonoBehaviour
     {
         var itemModel = new ItemModel()
         {
-            Text = $"item {_totalItemsCount++}"
+            Text = $"item {_totalItemsCount++}, type {_totalItemsCount % _typesCount}",
+            Type = _totalItemsCount % _typesCount,
         };
         _itemsList.Add(itemModel);
 
         var itemViewInstance = Instantiate(_item, _content);
         itemViewInstance.name = itemModel.Text;
-        var itemView = new ItemView(itemViewInstance);
+        var itemView = new ItemView(itemViewInstance, _totalItemsCount % _typesCount);
         _itemViewsList.Add(itemView);
 
         itemView.Text.text = itemModel.Text;
@@ -49,24 +56,43 @@ public class MenuPresenter : MonoBehaviour
         _itemViewsList.RemoveAt(_itemViewsList.Count - 1);
     }
 
-    class ItemModel
+    public void HideItem(ItemView item)
     {
-        public string Text { get; set; }
-        public bool IsActive { get; set; }
+        var itemContainer = item.Text.transform.parent.gameObject;
+        itemContainer.SetActive(false);
     }
 
-    class ItemView
+    public void ShowItem(ItemView item)
     {
-        private Text _text;
-        public Text Text => _text;
+        var itemContainer = item.Text.transform.parent.gameObject;
+        itemContainer.SetActive(true);
+    }
 
-        private Toggle _toggle;
-        public Toggle Toggle => _toggle;
+    public void SelectItem(ItemView item)
+    {
+        item.Toggle.isOn = true;
+    }
 
-        public ItemView(Transform parent)
+    public void UnselectItem(ItemView item)
+    {
+        item.Toggle.isOn = false;
+    }
+
+    public int GetActiveType(ToggleGroup toggleGroup)
+    {
+        var activeType = 0;
+        var toggles = toggleGroup.GetComponentsInChildren<Toggle>();
+
+        foreach (var toggle in toggles)
         {
-            _text = parent.Find("Text").GetComponent<Text>();
-            _toggle = parent.Find("Toggle").GetComponent<Toggle>();
+            if (toggle.isOn)
+            {
+                break;
+            }
+            activeType++;
         }
+
+        return activeType;
     }
+
 }

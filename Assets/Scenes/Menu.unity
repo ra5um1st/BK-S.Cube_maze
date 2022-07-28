@@ -707,6 +707,7 @@ GameObject:
   - component: {fileID: 257004168}
   - component: {fileID: 257004167}
   - component: {fileID: 257004169}
+  - component: {fileID: 257004170}
   m_Layer: 5
   m_Name: items Menu
   m_TagString: Untagged
@@ -792,6 +793,19 @@ MonoBehaviour:
   _removeButton: {fileID: 1572257309}
   _content: {fileID: 1146964685}
   _item: {fileID: 6802087886894368354, guid: c83549879d250ad45b80160757d1142f, type: 3}
+  _typesCount: 5
+--- !u!225 &257004170
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257004165}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &368210864
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,7 +1129,7 @@ GameObject:
   - component: {fileID: 559550271}
   - component: {fileID: 559550269}
   m_Layer: 5
-  m_Name: Left Toggles
+  m_Name: Items Type Toggles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1646,6 +1660,7 @@ GameObject:
   m_Component:
   - component: {fileID: 883472658}
   - component: {fileID: 883472660}
+  - component: {fileID: 883472661}
   - component: {fileID: 883472659}
   m_Layer: 5
   m_Name: Window Toggle
@@ -1684,9 +1699,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 883472657}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be7a53d906960c942acea261eeaf62cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 49558e2693a650745a2c0fc74b05b9da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sender: {fileID: 883472660}
+  _panel: {fileID: 257004165}
 --- !u!114 &883472660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1735,18 +1752,30 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 883472659}
-        m_TargetAssemblyTypeName: WindowToggleHandler, Assembly-CSharp
-        m_MethodName: OnWindowToggled
-        m_Mode: 2
+        m_TargetAssemblyTypeName: ItemsContainerToggleHandler, Assembly-CSharp
+        m_MethodName: OnItemsContainerToggled
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 883472660}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 1
+--- !u!114 &883472661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883472657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7a53d906960c942acea261eeaf62cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &913864779
 GameObject:
   m_ObjectHideFlags: 0
@@ -2151,8 +2180,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1152100121}
   - component: {fileID: 1152100122}
+  - component: {fileID: 1152100123}
   m_Layer: 5
-  m_Name: Toggle (1)
+  m_Name: Select All Items Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2224,8 +2254,35 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 1
+      m_Calls:
+      - m_Target: {fileID: 1152100123}
+        m_TargetAssemblyTypeName: SelectAllItemsToggleHandler, Assembly-CSharp
+        m_MethodName: OnSelectAllItemsToggled
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
+--- !u!114 &1152100123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152100120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d7cb5e466f34044a87ae3555c51cd87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _handler: {fileID: 1152100122}
+  _toggleGroup: {fileID: 559550269}
+  _presenter: {fileID: 257004169}
 --- !u!1 &1177336545
 GameObject:
   m_ObjectHideFlags: 0
@@ -2387,8 +2444,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1308134168}
   - component: {fileID: 1308134169}
+  - component: {fileID: 1308134170}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Hide Items Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2460,8 +2518,35 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 1
+      m_Calls:
+      - m_Target: {fileID: 1308134170}
+        m_TargetAssemblyTypeName: HideItemsToggleHandler, Assembly-CSharp
+        m_MethodName: OnHideItemsToggled
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
+--- !u!114 &1308134170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308134167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a916be10dfa364749b770c1f7b6b6809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _handler: {fileID: 1308134169}
+  _toggleGroup: {fileID: 559550269}
+  _presenter: {fileID: 257004169}
 --- !u!1 &1383494730
 GameObject:
   m_ObjectHideFlags: 0
